@@ -52,6 +52,8 @@ var logger = require('morgan');
 var methodOverride = require('method-override');
 var session = require('express-session');
 var bodyParser = require('body-parser');
+//json        = require('json'),
+//urlencoded   = require('urlencode'),
 var multer = require('multer');
 var upload = multer({ dest: './uploads' });
 var cookieParser = require('cookie-parser');
@@ -93,13 +95,14 @@ app.set('strict routing');
 
 
 //set Site url
-//global.sleekConfig.siteUrl = app.get('host')+':'+app.get('port');
+global.sleekConfig.siteUrl = app.get('host')+':'+app.get('port');
 //get configs
 var sFolderPath = path.join(__dirname, 'install');
 var cur_directory = path.join(__dirname, '');
 fs.exists(sFolderPath, function(exists) {
-    if (!exists)
+    if (!exists){
         require('./system/core/sleek.js')(app);
+    }
     else
     {
         require('./system/install/route.js')(app,sFolderPath,cur_directory);
