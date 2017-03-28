@@ -12,12 +12,11 @@
  * @date 18-Nov-2013
  */
 
-var fs = require('fs');
-var url = require('url');
+var fs   = require('fs');
+var url  = require('url');
 var http = require('http');
 var path = require('path');
 var util = require('util');
-var sys = require('sys');
 var formidable = require('formidable');
 var im = require('imagemagick');
 var img_arr = []; // image array

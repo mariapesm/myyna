@@ -8,37 +8,71 @@
   ],
   "author": "Cubet Techno Labs, Cochin <info@cubettech.com>",
   "description": "Pinterest clone script using node.js",
-  "contributors": [ 
+  "contributors": [
     {
       "name": "Robin C Samuel",
       "email": "robin@cubettech.com"
-    } 
+    },
+    {
+      "name": "Jesus Torres",
+      "email": "jmtt89@gmail.com"
+    }
   ],
-  "version": "0.0.1",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "latest",
-    "handlebars": "latest",
-    "mongodb": "latest",
-    "mongoose": "latest",
-    "consolidate": "latest",
-    "express3-handlebars": "latest",
-    "webshot": "latest",
-    "imagemagick": "latest",
-    "socket.io": "0.9.16",
-    "formidable": "1.0.14",
-    "fluent-ffmpeg": "1.5.2",
+    "async": "^1.5.2",
+    "body-parser": "^1.15.0",
+    "connect-mongo": "^1.1.0",
+    "consolidate": "^0.14.0",
+    "cookie-parser": "^1.4.1",
+    "errorhandler": "^1.1.1",
+    "express": "^4.13.4",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.13.0",
+    "facebook-js": "1.0.1",
+    "facebook-node-sdk": "0.2.0",
+    "fluent-ffmpeg": "^2.0.1",
+    "formidable": "^1.0.17",
+    "gm": "^1.21.1",
+    "handlebars": "^4.0.5",
+    "helmet": "^1.3.0",
+    "imagemagick": "^0.1.3",
+    "jade": "^1.11.0",
+    "method-override": "^2.3.5",
+    "mongodb": "^2.1.7",
+    "mongoose": "^4.4.6",
+    "morgan": "^1.7.0",
+    "multer": "^1.1.0",
+    "ncp": "^2.0.0",
+    "node-twitter-api": "^1.7.0",
     "nodemailer": "0.5.7",
-    "youtube-feeds":"2.2.1",
-    "gm":"1.13.3",
-    "facebook-js":"1.0.1",
-    "facebook-node-sdk":"0.2.0",
-    "node-twitter-api":"1.1.1",    
-    "social-share":"latest",
-    "helmet":"0.1.1"
+    "serve-favicon": "^2.3.0",
+    "serve-static": "^1.10.2",
+    "social-share": "latest",
+    "socket.io": "^1.4.5",
+    "webshot": "^0.18.0",
+    "youtube-feeds": "^2.4.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-concurrent": "2.2.1",
+    "grunt-contrib-cssmin": "1.0.0",
+    "grunt-contrib-jshint": "1.0.0",
+    "grunt-contrib-sass": "1.0.0",
+    "grunt-contrib-uglify": "1.0.0",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-cssc": "0.2.6",
+    "grunt-htmlhint": "0.9.12-fix",
+    "grunt-nodemon": "0.4.1",
+    "grunt-node-inspector": "0.4.1",
+    "grunt-open": "0.2.3",
+    "grunt-shell": "1.2.1",
+    "grunt-wait": "0.1.0",
+    "matchdep": "1.0.1"
   },
   "license": "MIT"
 }

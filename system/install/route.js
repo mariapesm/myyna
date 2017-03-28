@@ -24,27 +24,27 @@ var installPath,installDir;
 
 
 process.on('uncaughtException', function (exception) {
-	sio.sockets.emit('except'); 
-	console.log(exception);
-	console.log('Sorry! Installation Failed!');
-	installPath.replace('install', '_install')
-	fs.rename(installPath, path.join(installDir,'/install'), function(err) {
-		if (err) {
-			console.log(err);
-		}
-    		console.log('Reverting changes..');
-		process.exit(); 
-	});
-	   
+    sio.emit('except'); 
+    console.log(exception);
+    console.log('Sorry! Installation Failed!');
+    installPath.replace('install', '_install')
+    fs.rename(installPath, path.join(installDir,'/install'), function(err) {
+        if (err) {
+            console.log(err);
+        }
+            console.log('Reverting changes..');
+        process.exit(); 
+    });
+       
 });
 
 module.exports = function(app, sFolderPath, directory) {
-	installPath = sFolderPath;
-	installDir = directory;
+    installPath = sFolderPath;
+    installDir = directory;
 
     app.post('/installApp', function(req, res) {
         
-        sio.sockets.emit('status_data',{
+        sio.emit('status_data',{
             msg:'Starting...'
         }); 
      
@@ -103,7 +103,7 @@ module.exports = function(app, sFolderPath, directory) {
                 settings.logo = path.join('','/' + 'site-logo.png');
             }
 
-            sio.sockets.emit('status_data', {
+            sio.emit('status_data', {
                 msg:'extract config...'
             });
             var cur_pat = path.join(__dirname);
@@ -133,7 +133,7 @@ module.exports = function(app, sFolderPath, directory) {
                 });
 
             });
-            sio.sockets.emit('status_data', {
+            sio.emit('status_data', {
                 msg:'extract db...'
             });
             fs.readFile(db_path, 'utf8', function(err, Ddata) {
@@ -141,17 +141,17 @@ module.exports = function(app, sFolderPath, directory) {
                 if (err) {
                     return console.log(err);
                 }
-		db_data.dbHost = db_host;
-		db_data.dbName = db_name;
-		if(db_user && db_user != '' && db_user != null) {
-			db_data.dbUser = db_user;
-		}
-		if(db_password && db_password != '' && db_password != null) {	
-			db_data.dbPass = db_password;
-		}
+        db_data.dbHost = db_host;
+        db_data.dbName = db_name;
+        if(db_user && db_user != '' && db_user != null) {
+            db_data.dbUser = db_user;
+        }
+        if(db_password && db_password != '' && db_password != null) {   
+            db_data.dbPass = db_password;
+        }
 
-		Ddata = Ddata.replace(/{([^}]+)}/,  JSON.stringify(db_data));
-		
+        Ddata = Ddata.replace(/{([^}]+)}/,  JSON.stringify(db_data));
+        
                 fs.writeFile(db_path, Ddata.replace(/,/g, ', \n'), 'utf8', function(err) {
                     if (err)
                         return console.log(err);
@@ -182,37 +182,27 @@ module.exports = function(app, sFolderPath, directory) {
                                 if (config.dbUser && config.dbPass) {
                                     db.authenticate(config.dbUser, config.dbPass, function(err, ress) {
                                         insertdta(db_sample,db_name,dta,res,db,files,mongo, function(){
-                                            sio.sockets.emit('status_data', {
+                                            sio.emit('status_data', {
                                                 msg: 'New site Url Is '+base_url, 
                                                 last:true
                                             });
                                         });
 
                                     });
-                                } else {
-                                   
+                                } else {                        
                                     insertdta(db_sample,db_name,dta,res,db,files,mongo, function(){
-                                        sio.sockets.emit('status_data', {
+                                        sio.emit('status_data', {
                                             msg: 'New site Url Is '+base_url, 
                                             last:true
                                         });
-                                    });
-                                    
-
+                                    });                                    
                                 }
-
-
-
                             });
                         }
                     });
                 });
-
             });
-
-
         });
-
     });
     
     function insertdta(db_sample,db_name,user_data,res,db,files,mongo,callback){
@@ -230,19 +220,18 @@ module.exports = function(app, sFolderPath, directory) {
                 if (err) {
                     return console.error(err);
                 }
-		if (files && files.site_logo && files.site_logo.name && files.site_logo.name != '') {
-		        fs.readFile(files.site_logo.path, function(err, data) {
-		            var image = files.site_logo.name;
-		            var extension = image.split(".").pop();
-		            var newimage = 'site-logo.' + extension;
-		            var newPath = path.join('','uploads/' + newimage);
+                if (files && files.site_logo && files.site_logo.name && files.site_logo.name != '') {
+                    fs.readFile(files.site_logo.path, function(err, data) {
+                        var image = files.site_logo.name;
+                        var extension = image.split(".").pop();
+                        var newimage = 'site-logo.' + extension;
+                        var newPath = path.join('','uploads/' + newimage);
 
-		            fs.writeFile(newPath, data, function(err) {
-		                if(err) console.log(err);
-		            });
-
-		        });
-            	}
+                        fs.writeFile(newPath, data, function(err) {
+                            if(err) console.log(err);
+                        });
+                    });
+                }
                 console.log('done!');
             });
         }
@@ -251,13 +240,13 @@ module.exports = function(app, sFolderPath, directory) {
             var command = 'mongorestore -d' + db_name + ' '+path.join(sFolderPath,'/db/withoutdata');
         }
 
-        child = exec(command, // command line argument directly in string
-            //child = exec('mongodump -d cbt -o petsbackup', 
+        //child = exec(command, // command line argument directly in string
+        child = exec('mongodump -d cbt -o petsbackup', 
             function(error, stdout, stderr) {      // one easy function to capture data/errors
 
-               // console.log('stderr: ' + stderr);
+                console.log('stderr: ' + stderr);
                 if (error !== null) {
-                  //  console.log('exec error: ' + error);
+                    console.log('exec error: ' + error);
                 }
                         
                 var collection = db.collection('adminuser');
@@ -267,49 +256,46 @@ module.exports = function(app, sFolderPath, directory) {
 
                     
                     var collection = db.collection('board');  
-        collection.update(
-                            {   'creator' : mongo.ObjectID('528da071b35661711a000001')   },
-                            {'$set':{
-                                'creator' : inserted_data[0]._id
-                            }},
-                        { multi: true },
-                            function (errrr,data1) {
-                                if (errrr) return handleError(errrr);
-                              
-         });
+                    collection.update(
+                        {'creator'  : mongo.ObjectID('528da071b35661711a000001')   },
+                        {'$set'     : { 'creator' : inserted_data.ops[0]._id }},
+                        {'multi'    : true },
+                        function (errrr,data1) {
+                            if (errrr) return handleError(errrr);           
+                        }
+                    );
 
                     var collection = db.collection('site_settings');
-                    collection.insert(user_data.settings, function(err, inserted_setting_data) {
-                        
-                        if (err)
-                            return console.error(err);
+                    collection.insert(
+                        user_data.settings, 
+                        function(err, inserted_setting_data) {
+                            if (err)
+                                return console.error(err);
+                            console.log('settings inserted !! ');
 
-                        	console.log('settings inserted !! ');
-
-				fs.rename(sFolderPath, path.join(directory , '/_install'), function(err) {
-				    if (err) {
-				        throw err;
-					sio.sockets.emit('rename_err'); 				
-					console.log('Please delete or rename your install directory to something else');
-				    } else {
-				    	console.log('install directory rename to _install');
-				    }
-				    var send_data ={
-				        "res":1
-				    }
-				    res.send(send_data);
-				    callback();
-				});
-
-                    });
-
+                            fs.rename(
+                                sFolderPath, 
+                                path.join(directory , '/_install'), 
+                                function(err) {
+                                    if (err) {
+                                        throw err;
+                                    sio.emit('rename_err');                 
+                                    console.log('Please delete or rename your install directory to something else');
+                                    } else {
+                                        console.log('install directory rename to _install');
+                                    }
+                                    var send_data ={
+                                        "res":1
+                                    }
+                                    res.send(send_data);
+                                    callback();
+                                }
+                            );
+                        }
+                    );
                 });
-               
-                
-
-                
-           
-            });
+            }
+        );
     }
 
     app.post('/permissioncheck', function(req, res) {
@@ -376,8 +362,6 @@ module.exports = function(app, sFolderPath, directory) {
                     res.send(data);
                 }
             });
-        
-    
     });
     
     app.get('/success',function(req,res){

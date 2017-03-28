@@ -14,7 +14,7 @@ global.sleekConfig.appHost = 'localhost';
 global.sleekConfig.siteUrl = 'http://localhost:3000';
 global.sleekConfig.env = 'development';
 
-//global.sleekConfig.configLibs = [];
+global.sleekConfig.configLibs = ['mongodb','session'];
 //themeing
 global.sleekConfig.theme = 'default'
 //logging
