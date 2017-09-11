@@ -1,8 +1,8 @@
 ![Myyna, pintrest clone](http://www.myyna.com/wp-content/uploads/2014/02/band_logo11.png)
 
-#Install Node.js version 0.8 or above (stable version preferred)
+# Install Node.js version 0.8 or above (stable version preferred)
 
-###Mac
+### Mac
 
 If you're using the excellent homebrew package manager, you can install node with one command: brew install node.
 Otherwise, follow the below steps:
@@ -15,7 +15,7 @@ Run the following commands:<br>
 `make`<br>
 `sudo make install`
 
-###Ubuntu
+### Ubuntu
 
 1.Install the dependencies:<br>
 `sudo apt-get install g++ curl libssl-dev apache2-utils`<br>
@@ -45,7 +45,7 @@ http://howtonode.org/how-to-install-nodejs
 use this link for further information:  
 http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
-###Install MongoDB with Homebrew
+### Install MongoDB with Homebrew
 
 Homebrew [1] installs binary packages based on published “formulae”. The following commands will update brew to the latest packages and install MongoDB.
 
@@ -67,14 +67,14 @@ http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/
 ### Download & extract myyna to your project folder.
 
 
-###Provide read and write permission to config & uploads folder
+### Provide read and write permission to config & uploads folder
 It is mandatory, since we need to rewrite the config files & uploads directory.
-###Open terminal, and navigate to project directory & Run
+### Open terminal, and navigate to project directory & Run
 For example,<br>
 `cd Projects/myyna`<br>
 `node app`<br>
 
-##Install Myyna
+## Install Myyna
 
 1.Navigate browser to  http://localhost:3000 to continue installation.
  
@@ -97,7 +97,7 @@ nohup node app &
 9. Visit your site url to see it in action 
 eg:-http://localhost:3000 or http://example.com
 
-###See your admin section
+### See your admin section
 
 Myyna application includes an admin panel, to control your site.  Here you can manage users, admin users, site name & logo, meta descriptions, social connects and all. Admin section can be accessed by navigating to your siteurl/admin, with  username and password selected at the installation time.
 
