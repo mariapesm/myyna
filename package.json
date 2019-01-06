@@ -6,6 +6,7 @@
     "Node.js",
     "CubetBoard"
   ],
+  
   "author": "Cubet Techno Labs, Cochin <info@cubettech.com>",
   "description": "Pinterest clone script using node.js",
   "contributors": [
